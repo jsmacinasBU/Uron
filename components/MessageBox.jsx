@@ -1,6 +1,13 @@
-import { format } from "date-fns"
+import React, { useState } from "react";
+import { format } from "date-fns";
+import "../app/globals.css";
 
 const MessageBox = ({ message, currentUser }) => {
+  const [visible, setVisible] = useState(false);
+
+  const showMessage = () => setVisible(true);
+  const hideMessage = () => setVisible(false);
+
   return message?.sender?._id !== currentUser._id ? (
     <div className="message-box">
       <img src={message?.sender?.profileImage || "/assets/person.jpg"} alt="profile photo" className="message-profilePhoto" />
@@ -10,7 +17,16 @@ const MessageBox = ({ message, currentUser }) => {
         </p>
 
         {message?.text ? (
-          <p className="message-text">{message?.text}</p>
+          <div
+            className="message-overlay"
+            onMouseDown={showMessage}
+            onMouseUp={hideMessage}
+            onMouseLeave={hideMessage}
+          >
+            <span className={`message-text ${visible ? 'visible' : ''}`}>
+              {message?.text}
+            </span>
+          </div>
         ) : (
           <img src={message?.photo} alt="message" className="message-photo" />
         )}
@@ -24,7 +40,16 @@ const MessageBox = ({ message, currentUser }) => {
         </p>
 
         {message?.text ? (
-          <p className="message-text-sender">{message?.text}</p>
+          <div
+            className="message-overlay"
+            onMouseDown={showMessage}
+            onMouseUp={hideMessage}
+            onMouseLeave={hideMessage}
+          >
+            <span className={`message-text-sender ${visible ? 'visible' : ''}`}>
+              {message?.text}
+            </span>
+          </div>
         ) : (
           <img src={message?.photo} alt="message" className="message-photo" />
         )}
@@ -33,4 +58,4 @@ const MessageBox = ({ message, currentUser }) => {
   )
 }
 
-export default MessageBox
+export default MessageBox;

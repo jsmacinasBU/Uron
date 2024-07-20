@@ -6,12 +6,12 @@ const ChatBox = ({ chat, currentUser, currentChatId }) => {
     (member) => member._id !== currentUser._id
   );
 
-  const lastMessage =
-    chat?.messages?.length > 0 && chat?.messages[chat?.messages.length - 1];
+  // const lastMessage =
+  //   chat?.messages?.length > 0 && chat?.messages[chat?.messages.length - 1];
 
-  const seen = lastMessage?.seenBy?.find(
-    (member) => member._id === currentUser._id
-  );
+  // const seen = lastMessage?.seenBy?.find(
+  //   (member) => member._id === currentUser._id
+  // );
 
   const router = useRouter();
 
@@ -42,9 +42,9 @@ const ChatBox = ({ chat, currentUser, currentChatId }) => {
             <p className="text-base-bold">{otherMembers[0]?.username}</p>
           )}
 
-          {!lastMessage && <p className="text-small-bold">Started a chat</p>}
+          {/* {!lastMessage && <p className="text-small-bold">Started a chat</p>} */}
 
-          {lastMessage?.photo ? (
+          {/* {lastMessage?.photo ? (
             lastMessage?.sender?._id === currentUser._id ? (
               <p className="text-small-medium text-grey-3">You sent a photo</p>
             ) : (
@@ -64,17 +64,17 @@ const ChatBox = ({ chat, currentUser, currentChatId }) => {
             >
               {lastMessage?.text}
             </p>
-          )}
+          )} */}
         </div>
       </div>
 
-      <div>
+      {/* <div>
         <p className="text-base-light text-grey-3">
           {!lastMessage
             ? format(new Date(chat?.createdAt), "p")
             : format(new Date(chat?.lastMessageAt), "p")}
         </p>
-      </div>
+      </div> */}
     </div>
   );
 };

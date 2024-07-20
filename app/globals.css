@@ -193,3 +193,30 @@
 .logo {
   width: 200px; height: auto; margin-bottom: 20px; 
 }
+
+.message-container {
+  position: relative;
+  display: inline-block;
+  /* @apply flex; */
+}
+
+.message-overlay {
+  background-color: gray;
+  color: transparent;
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 5px;
+  user-select: none;
+}
+
+.message-text,
+.message-text-sender {
+  visibility: hidden;
+}
+
+.message-text.visible,
+.message-text-sender.visible {
+  visibility: visible;
+  color: black;
+  @apply flex;
+}
