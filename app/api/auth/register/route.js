@@ -5,6 +5,7 @@ import { sha3_512 } from "js-sha3";
 import bcrypt from 'bcrypt';
 import nodemailer from 'nodemailer';
 import { NextResponse } from 'next/server';
+const crypto = require('crypto');
 
 export const POST = async (req) => {
   try {
@@ -48,9 +49,18 @@ let transporter = nodemailer.createTransport({
   },
 });
 
+const generateSecureOTP = (id, secretKey) => {
+  const timestamp = Date.now().toString(); // Current timestamp
+  const baseString = `${id}${timestamp}${secretKey}`; // Concatenate id, timestamp, and secret key
+  const hash = crypto.createHash('sha256').update(baseString).digest('hex'); // Generate SHA-256 hash
+  const otp = hash.slice(-6); // Extract the last 6 characters from the hash
+  return otp;
+};
+
 const sendOTPVerificationEmail = async ({ _id, email }) => {
   try {
-    const otp = Math.floor(100_000 + Math.random() * 900_000).toString();
+    const secretKey = process.env.OTP_SECRET;
+    const otp = generateSecureOTP(_id, secretKey);
     console.log(`Generated OTP: ${otp}`);
 
     const mailOptions = {
